@@ -1,4 +1,5 @@
 <?php include __DIR__ . '/templates/header.php'; ?>
+<div class="container">
 <h2>Créer un nouveau compte</h2>
 <form action="index.php?action=create-compte" method="POST">
     <div>
@@ -27,3 +28,4 @@
     
     <button type="submit">Créer le compte</button>
 </form>
+</div>

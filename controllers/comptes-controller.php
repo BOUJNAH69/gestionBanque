@@ -2,28 +2,47 @@
 require_once __DIR__ . '/../model/comptes.php';
 
 class ComptesController {
-    private $compteModel;
+    private $comptesModel;
 
     public function __construct() {
-        $this->compteModel = new Comptes();
+        $this->comptesModel = new Comptes();
+    }
+
+    public function createCompte($id_client, $type_compte, $solde, $num_client_associe) {
+        // Vérifie si l'ID client existe
+        $clientExist = $this->comptesModel->clientExists($id_client);
+        if (!$clientExist) {
+            echo "Erreur : Le client avec l'ID $id_client n'existe pas.";
+            exit;
+        }
+        $this->comptesModel->addCompte($id_client, $type_compte, $solde, $num_client_associe);
+
+        header('Location: http://localhost/gestionBanque/index.php?page=liste-comptes');
+        exit;
     }
 
     public function listAllComptes() {
-        $comptes = $this->compteModel->getAllComptes();
-        require_once __DIR__ . '/../views/liste-comptes.php';
-    }
-
-    public function newCompte() {
-        require_once __DIR__ . '/../views/new-comptes.php';
-    }
-
-    public function createCompte($client_id, $balance) {
-        $this->compteModel->addCompte($client_id, $balance);
-        header('Location: index.php?page=liste-comptes');
+        $comptes = $this->comptesModel->getAllComptes();
+        include __DIR__ . '/../views/liste-comptes.php';
     }
 
     public function deleteCompte($id) {
-        $this->compteModel->deleteCompte($id);
-        header('Location: index.php?page=liste-comptes');
+        $this->comptesModel->deleteCompte($id);
+        header('Location: http://localhost/gestionBanque/index.php?page=liste-comptes');
+        exit;
+    }
+
+    public function newCompte() {
+        include __DIR__ . '/../views/new-comptes.php';
+    }
+    public function editCompte($id_compte) {
+        $compte = $this->comptesModel->getCompteById($id_compte);
+        include __DIR__ . '/../views/edit-compte.php';
+    }
+    
+    public function updateCompte($id_compte, $type_compte, $solde) {
+        $this->comptesModel->updateCompte($id_compte, $type_compte, $solde);
+        header('Location: http://localhost/gestionBanque/index.php?page=liste-comptes');
+        exit;
     }
 }

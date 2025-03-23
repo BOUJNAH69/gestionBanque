@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - Gestion des comptes et clients</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="login-container">
         <h2>Connexion administrateur</h2>
-        <form action="../index.php?action=connexion" method="POST">
+        <form action="http://localhost/gestionBanque/index.php?action=connexion" method="POST">
             <div>
                 <label for="username">Nom d'utilisateur :</label>
                 <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
